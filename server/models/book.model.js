@@ -28,6 +28,10 @@ const BookSchema = new mongoose.Schema(
   { timestamps: true } // adds createdAt and updatedAt.
 );
 
+BookSchema.virtual('postId').get(function () {
+  return this._id.toHexString()
+})
+
 const Book = mongoose.model('Book', BookSchema);
 
 module.exports = { Book: Book };

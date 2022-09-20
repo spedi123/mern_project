@@ -21,6 +21,16 @@ const UserSchema = new mongoose.Schema({
     }
   }, {timestamps: true});
 
+  UserSchema.virtual('userId').get(function () {
+    return this._id.toHexString()
+  })
+
+  UserSchema.set('toJSON', {
+    virtuals: true,
+  })
+
+
+
 
   // UserSchema.virtual('confirmPassword')
   // .get( () => this._confirmPassword )

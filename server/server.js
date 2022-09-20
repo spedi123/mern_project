@@ -5,7 +5,8 @@ const cors = require('cors');
 const port = 8000;
 
 const { userRouter } = require('./routes/user.routes');
-const { bookRouter } = require('./routes/book.routes')
+const { bookRouter } = require('./routes/book.routes');
+const { commentRouter } = require('./routes/comment.routes');
 
 // requiring / importing runs the file!
 // This file doesn't need to export anything though, so we need a var.
@@ -28,6 +29,7 @@ app.use(express.json());
 
 app.use('/api/users', userRouter);
 app.use('/api/books', bookRouter);
+app.use('/api/comments', commentRouter);
 
 app.listen(port, () =>
   console.log(`Listening on port ${port} for REQuests to RESpond to.`)
