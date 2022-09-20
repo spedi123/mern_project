@@ -2,23 +2,26 @@ const mongoose = require('mongoose');
 
 const BookSchema = new mongoose.Schema(
   {
+    bookId : {
+      type:String
+    },
     title: {
-      type: String,
-      required: [true, '{PATH} is required.'],
-      minlength: [2, '{PATH} must be at least {MINLENGTH} characters.'],
+      type: String
     },
-    author: {
-      type: String,
-      required: [true, '{PATH} is required.'],
-      minlength: [5, '{PATH} must be at least {MINLENGTH} characters.'],
+    authors: {
+      type: String
     },
-    published: {
-      type: String,
-      required: [true, '{PATH} is required.'],
+    publishedDate: {
+      type: String
+    },
+    rating: {
+      type: Number
+    },
+    ratingCount: {
+      type: Number
     },
     numberOfPages: {
-      type: Number,
-      required: [true, '{PATH} is required.'],
+      type: Number
     },
     likes: {
       type: String,
@@ -27,10 +30,6 @@ const BookSchema = new mongoose.Schema(
   },
   { timestamps: true } // adds createdAt and updatedAt.
 );
-
-BookSchema.virtual('postId').get(function () {
-  return this._id.toHexString()
-})
 
 const Book = mongoose.model('Book', BookSchema);
 
