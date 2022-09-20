@@ -34,7 +34,7 @@ function App () {
   const handleSearchSubmit = (e) => {
     e.preventDefault();
     axios
-      .get('https://www.googleapis.com/books/v1/volumes',
+      .get('https://www.googleapis.com/books/v1/volumes?',
         { params: { q: searchInput } })
       .then(response => {
         console.log(response.data);
