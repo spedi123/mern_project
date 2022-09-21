@@ -45,7 +45,7 @@ header {
 }
 
 #searchInputField {
-  width: 420px;
+  width: 300px;
 }
 
 .searchBtn {
@@ -80,6 +80,13 @@ header {
 .searchBtn:hover span {
   transform: scale(.9);
   opacity: .75;
+}
+
+#sortBtn {
+  width: fit-content;
+  font-family: "Codec cold", sans-serif;
+  font-size: 16px;
+  font-weight: 700;
 }
 
 .menuContainer {
@@ -372,4 +379,8 @@ h1 {
   display: flex;
   justify-content: center;
   align-items: center;
+}
+
+.notFound {
+  padding: 30px;
 }

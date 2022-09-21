@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React from 'react';
 import { useNavigate } from 'react-router-dom';
 
 const BookCard = (props) => {
@@ -14,18 +14,22 @@ const BookCard = (props) => {
     }
 
     const updateAuthors = () => {
-        return (
-            props.authors !== undefined && props.authors.length > 1
-                ? `${props.authors[0]} et al.`
-                : props.authors
-        )
+        if (props.authors !== undefined && props.authors.length > 1) {
+            return `${props.authors[0]} et al.`
+        }
+        else if (props.authors === undefined) {
+            return 'Anonymous'
+        }
+        else {
+            return props.authors
+        }
     }
 
     const updatePublishedDate = () => {
         return (
-            props.publishedDate !== undefined
-                ? props.publishedDate.substring(0, 4)
-                : null
+            props.publishedDate === '0000'
+                ? 'Not available'
+                : props.publishedDate.substring(0, 4)
         )
     }
 

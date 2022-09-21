@@ -7,12 +7,17 @@ const OneBook = ({ props }) => {
     const location = useLocation();
 
     const updateAuthors = () => {
-        return (
-            location.state.authors !== undefined && location.state.authors.length > 1
-                ? `${location.state.authors.join(', ')}`
-                : location.state.authors
-        )
+        if (location.state.authors !== undefined && location.state.authors.length > 1) {
+            return `${location.state.authors.join(', ')}`
+        }
+        else if (location.state.authors === undefined) {
+            return 'Anonymous'
+        }
+        else {
+            return location.state.authors
+        }
     }
+
 
     const updateRating = () => {
         return (

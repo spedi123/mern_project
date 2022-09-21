@@ -15,6 +15,16 @@ const SearchBar = (props) => {
                 <button className="searchBtn">
                     <span>SEARCH</span>
                 </button>
+
+                <select
+                    className="form-select"
+                    id="sortBtn"
+                    defaultValue="sortBy"
+                    onChange={props.handleSortChange}>
+                    <option value="sortBy">Sort by</option>
+                    <option value="newest">Newest</option>
+                    <option value="oldest">Oldest</option>
+                </select>
             </form>
         </div>
     )
