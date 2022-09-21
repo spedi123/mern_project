@@ -19,7 +19,7 @@ const {
         res.json({
             _id: user.id,
             userName: user.userName,
-            email: user.email,
+            email1: user.email,
             token: generateToken(user._id)
         })
     } else {

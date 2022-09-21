@@ -17,6 +17,7 @@ import OneBook from './views/OneBook';
 import MyBooks from './views/MyBooks';
 import NotFound from './views/NotFound';
 import './App.css';
+import LoginAndRegister from './views/LoginAndRegister';
 
 function App () {
   const [searchInput, setSearchInput] = useState("");
@@ -59,27 +60,28 @@ function App () {
       }
     })
 
-return (
-  <div className="App">
-    <nav className="navbar sticky-top navbar-dark bg-light" id="navBarContainer">
-      <Header />
-      <SearchBar
-        handleSearchChange={handleSearchChange}
-        handleSearchSubmit={handleSearchSubmit}
-        handleSortChange={handleSortChange}
-      />
-      <SubMenu />
-    </nav>
+  return (
+    <div className="App">
+      <nav className="navbar sticky-top navbar-dark bg-light" id="navBarContainer">
+        <Header />
+        <SearchBar
+          handleSearchChange={handleSearchChange}
+          handleSearchSubmit={handleSearchSubmit}
+          handleSortChange={handleSortChange}
+        />
+        <SubMenu />
+      </nav>
 
-    <Routes>
-      <Route path="/" element={<Welcome />} />
-      <Route path="/books" element={<AllBooks books={sortedBooks} />} />
-      <Route path="/books/:id" element={<OneBook />} />
-      <Route path="/mybooks" element={<MyBooks />} />
-      <Route path="/error" element={<NotFound searchInput={searchInput} />} />
-    </Routes>
-  </div>
-);
+      <Routes>
+        <Route path="/" element={<Welcome />} />
+        <Route path="/books" element={<AllBooks books={sortedBooks} />} />
+        <Route path="/books/:id" element={<OneBook />} />
+        <Route path="/mybooks" element={<MyBooks />} />
+        <Route path="/users" element={<LoginAndRegister />} />
+        <Route path="/error" element={<NotFound searchInput={searchInput} />} />
+      </Routes>
+    </div>
+  );
 }
 
 export default App;

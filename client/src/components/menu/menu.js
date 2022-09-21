@@ -11,7 +11,7 @@ const SubMenu = (props) => {
                 <Link to="/mybooks" className="menuLink">
                     <li>My Favorite Books</li>
                 </Link>
-                <Link to="/signin" className="menuLink">
+                <Link to="/users" className="menuLink">
                     <li>Sign In / Register</li>
                 </Link>
             </ul>
