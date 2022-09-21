@@ -12,8 +12,8 @@ const LoginAndRegister = () => {
     const [ password, setPassword ] = useState("");
     const [ confirmPassword, setConfirmPassword ] = useState("");
 
-    // const [ email, setEmail ] = useState("")
-    // const [ password, setPassword ] = useState("")
+    const [ loginEmail, setLoginEmail ] = useState("")
+    const [ loginPassword, setLoginPassword ] = useState("")
 
     const handleRegister = (e) => {
         e.preventDefault();
@@ -36,7 +36,7 @@ const LoginAndRegister = () => {
 
     const handleLogin = (e) => {
         e.preventDefault();
-        const user = { email, password }
+        const user = { email:loginEmail, password:loginPassword }
 
         loginUser(user)
             .then((data) => {
@@ -86,13 +86,13 @@ const LoginAndRegister = () => {
                     <div className="row">
                         <div className="form-block">
                             <label className="form-label">Email: </label>
-                            <input type="text" value={ email } onChange={ e => setEmail(e.target.value) } className="form-input_text"/>
+                            <input type="text" value={ loginEmail } onChange={ e => setLoginEmail(e.target.value) } className="form-input_text"/>
                         </div>
                     </div>
                     <div className="row">
                         <div className="form-block">
                             <label className="form-label">Password: </label>
-                            <input type="text" value={ password } onChange={ e => setPassword(e.target.value) } className="form-input_text"/>
+                            <input type="text" value={ loginPassword } onChange={ e => setLoginPassword(e.target.value) } className="form-input_text"/>
                         </div>
                     </div>
                     <div className="row">
