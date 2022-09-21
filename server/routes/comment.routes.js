@@ -11,7 +11,6 @@ const {
 const router = express.Router();
 
 router.post('/', handleCreateComment);
-router.post('/many', handleCreateManyComments);
 router.get('/:id', handleGetCommentById);
 router.get('/', handleGetAllComments);
 router.delete('/:id', handleDeleteCommentById);
