@@ -251,7 +251,8 @@ h1 {
   font-size: small;
 }
 
-.viewDetailsBtn {
+.viewDetailsBtn,
+.returnToAllBooksBtn {
   width: 100px;
   min-height: 20px;
   font-size: 10px;
@@ -278,13 +279,17 @@ h1 {
 }
 
 .viewDetailsBtn:hover,
-.viewDetailsBtn:active {
+.viewDetailsBtn:active,
+.returnToAllBooksBtn:hover,
+.returnToAllBooksBtn:active {
   background-color: #212529;
   background-position: 0 0;
   color: white;
 }
 
-.viewDetailsBtn:active {
+.viewDetailsBtn:active,
+.returnToAllBooksBtn:active {
+
   opacity: .5;
 }
 
@@ -326,7 +331,7 @@ h1 {
 }
 
 .oneBookContainer {
-  width: 800px;
+  width: 100%;
   height: fit-content;
   color: black;
   background-color: rgb(255, 255, 255);
@@ -343,23 +348,28 @@ h1 {
 .oneBookRow1 {
   width: 100%;
   display: flex;
-  border: 1px solid green;
 }
 
 .oneBookRow1Left {
-  width: 40%;
-  border: 1px solid blue;
+  width: 20%;
+  padding-top: 15px;
+}
+
+.oneBookImage {
+  width: 100%;
 }
 
 .oneBookRow1Right {
-  width: 60%;
+  width: 80%;
   padding: 15px;
-  border: 1px solid yellow;
+}
+
+.oneBookRow1Right li {
+  margin-bottom: 15px;
 }
 
 .oneBookRow2 {
   display: flex;
   justify-content: center;
   align-items: center;
-  border: 1px solid purple
 }

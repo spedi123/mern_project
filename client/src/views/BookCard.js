@@ -7,41 +7,48 @@ const BookCard = (props) => {
 
     const updateTitle = () => {
         return (
-            props.title.length > 26
-                ? `${props.title.substring(0, 27)}...`
+            props.title !== undefined && props.title.length > 25
+                ? `${props.title.substring(0, 26)}...`
                 : props.title
         )
     }
 
     const updateAuthors = () => {
         return (
-            props.authors.length > 1
+            props.authors !== undefined && props.authors.length > 1
                 ? `${props.authors[0]} et al.`
                 : props.authors
-
         )
     }
 
     const updatePublishedDate = () => {
-        return (props.publishedDate.substring(0, 4))
+        return (
+            props.publishedDate !== undefined
+                ? props.publishedDate.substring(0, 4)
+                : null
+        )
     }
 
     const updateRating = () => {
         return (
-            props.rating == undefined
-                ? 'Average Rating: None'
-                : `Average Rating: ${props.rating} out of 5`
+            props.averageRating !== undefined
+                ? `Average Rating: ${props.averageRating} out of 5`
+                : 'Average Rating: None'
         )
     }
 
     const handleViewDetailsClick = () => {
         navigate(`/books/${props.id}`, {
             state: {
-                image: props.image,
+                id: props.id,
+                thumbnail: props.thumbnail,
                 title: props.title,
                 authors: props.authors,
                 publishedDate: props.publishedDate,
-                rating: props.rating
+                averageRating: props.averageRating,
+                ratingsCount: props.ratingsCount,
+                pageCount: props.pageCount,
+                description: props.description
             }
         })
     }
@@ -49,7 +56,7 @@ const BookCard = (props) => {
     return (
         <div className="bookCardContainer">
             <div className="bookCardImgContainer">
-                <img src={props.image} alt="bookcover"
+                <img src={props.thumbnail} alt="bookcover"
                     className="bookCardThumbnail"
                 />
             </div>
@@ -62,7 +69,7 @@ const BookCard = (props) => {
                     {updateAuthors(props.authors)} ({updatePublishedDate(props.publishedDate)})
                 </p>
                 <p className="bookCardInfoRating">
-                    {updateRating(props.rating)}
+                    {updateRating(props.averageRating)}
                 </p>
             </div>
 

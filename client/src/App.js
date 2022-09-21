@@ -30,14 +30,14 @@ function App () {
     setSearchInput(e.target.value);
   }
 
-
   const handleSearchSubmit = (e) => {
     e.preventDefault();
     axios
       .get('https://www.googleapis.com/books/v1/volumes?',
-        { params: { q: searchInput } })
+        { params: {q: searchInput, maxResults: 40} }
+      )
       .then(response => {
-        console.log(response.data);
+        console.log(response.data.items);
         setBooks([...response.data.items]);
         navigate('/books');
       })
