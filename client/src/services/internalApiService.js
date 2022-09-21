@@ -28,3 +28,13 @@ export const deleteBookById = async (id) => {
     const res = await http.delete(`/books/${id}/delete`);
     return res.data;
 }
+
+export const createUser = async (data) => {
+    const res = await http.post('/users/signup', data);
+    return res.data;
+}
+
+export const loginUser = async (data) => {
+    const res = await http.post('/users/login', data);
+    return res.data;
+}

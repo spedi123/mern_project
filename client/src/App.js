@@ -17,6 +17,7 @@ import OneBook from './views/OneBook';
 import MyBooks from './views/MyBooks';
 import NotFound from './views/NotFound';
 import './App.css';
+import LoginAndRegister from './views/LoginAndRegister';
 
 function App () {
   const [searchInput, setSearchInput] = useState("");
@@ -60,6 +61,7 @@ function App () {
         <Route path="/books" element={<AllBooks books={books} />} />
         <Route path="/books/:id" element={<OneBook book={book} />} />
         <Route path="/mybooks" element={<MyBooks />} />
+        <Route path="/users" element={<LoginAndRegister />} />
         <Route path="/error" element={<NotFound />} />
       </Routes>
     </div>
