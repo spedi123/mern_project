@@ -1,21 +1,23 @@
 import React from 'react';
-import {useState} from 'react';
+import { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
-import {createUser, loginUser} from '../services/internalApiService'
+import { createUser, loginUser } from '../services/internalApiService'
 
 const LoginAndRegister = () => {
 
     const navigate = useNavigate();
 
     const [userName, setUserName] = useState("");
-    const [ email, setEmail ] = useState("");
-    const [ password, setPassword ] = useState("");
-    const [ confirmPassword, setConfirmPassword ] = useState("");
+    const [email, setEmail] = useState("");
+    const [password, setPassword] = useState("");
+    const [confirmPassword, setConfirmPassword] = useState("");
 
-    const [ loginEmail, setLoginEmail ] = useState("")
-    const [ loginPassword, setLoginPassword ] = useState("")
+    const [loginEmail, setLoginEmail] = useState("")
+    const [loginPassword, setLoginPassword] = useState("")
 
-    const handleRegister = (e) => {
+    const [errors, setErrors] = useState(null);
+
+    const handleRegisterSubmit = (e) => {
         e.preventDefault();
         const newUser = {
             userName,
@@ -23,84 +25,141 @@ const LoginAndRegister = () => {
             password,
             confirmPassword
         };
-        
+
         createUser(newUser)
             .then((data) => {
                 console.log('new user data:', data);
-                navigate('/')  
+                navigate('/')
             })
             .catch((error) => {
                 console.log(error);
-            } )
+                setErrors(error?.response?.data?.errors);
+            })
     }
 
-    const handleLogin = (e) => {
+    const handleLoginSubmit = (e) => {
         e.preventDefault();
-        const user = { email:loginEmail, password:loginPassword }
+        const user = { email: loginEmail, password: loginPassword }
 
         loginUser(user)
             .then((data) => {
                 console.log('login user:', data);
-                navigate('/')  
+                navigate('/')
             })
             .catch((error) => {
                 console.log(error);
-            } )
+                setErrors(error?.response?.data?.errors);
+            })
     }
 
     return (
-        <div style={{textAlign: "center"}} className="d-flex justify-content-around">
-            <div>
-                <form onSubmit={handleRegister}>
-                    <div className="row">
-                        <div className="form-block">
-                            <label className="form-label">UserName: </label>
-                            <input type="text" value={ userName } onChange={ e => setUserName(e.target.value) } className="form-input_text"/>
-                        </div>
+        <div className="contentContainer">
+            <div className="registerFormContainer">
+                <p className="createAccount">Create Account</p>
+                <form className="registerForm"
+                    onSubmit={handleRegisterSubmit}>
+                    <div className="form-group mb-3 row">
+                        <label className="form-label">Username: </label>
+                        {
+                            errors?.userName &&
+                            <span style={{ color: 'red' }}>
+                                {errors?.userName?.message}
+                            </span>
+                        }
+                        <input className="form-control" id="registerInput"
+                            type="text"
+                            value={userName}
+                            onChange={e => setUserName(e.target.value)} />
                     </div>
-                    <div className="row">
-                        <div className="form-block">
-                            <label className="form-label">Email: </label>
-                            <input type="text" value={ email } onChange={ e => setEmail(e.target.value) } className="form-input_text"/>
-                        </div>
+
+                    <div className="form-group mb-3 row">
+                        <label className="form-label">Email: </label>
+                        {
+                            errors?.email &&
+                            <span style={{ color: 'red' }}>
+                                {errors?.email?.message}
+                            </span>
+                        }
+                        <input className="form-control" id="registerInput"
+                            type="email"
+                            value={email}
+                            onChange={e => setEmail(e.target.value)} />
                     </div>
-                    <div className="row">
-                        <div className="form-block">
-                            <label className="form-label">Password: </label>
-                            <input type="text" value={ password } onChange={ e => setPassword(e.target.value) } className="form-input_text"/>
-                        </div>
+
+                    <div className="form-group mb-3 row">
+                        <label className="form-label">Password: </label>
+                        {
+                            errors?.password &&
+                            <span style={{ color: 'red' }}>
+                                {errors?.password?.message}
+                            </span>
+                        }
+                        <input className="form-control"
+                            type="password"
+                            value={password}
+                            onChange={e => setPassword(e.target.value)} />
                     </div>
-                    <div className="row">
-                        <div className="form-block">
-                            <label className="form-label">ConfirmPassword: </label>
-                            <input type="text" value={ confirmPassword } onChange={ e => setConfirmPassword(e.target.value) } className="form-input_text"/>
-                        </div>
+
+                    <div className="form-group mb-3 row">
+                        <label className="form-label">ConfirmPassword: </label>
+                        {
+                            errors?.confirmPassword &&
+                            <span style={{ color: 'red' }}>
+                                {errors?.confirmPassword?.message}
+                            </span>
+                        }
+                        <input className="form-control mb-3"
+                            type="password"
+                            value={confirmPassword}
+                            onChange={e => setConfirmPassword(e.target.value)} />
                     </div>
-                    <div className="row">
-                        <input type="submit" value="Create" className="btn"/>
+
+                    <div className="form-group mb-3 row">
+                        <input className="registerBtn" type="submit" value="CREATE" />
                     </div>
                 </form>
-            </div>
-            <div>
-            <form onSubmit={handleLogin}>
-                    <div className="row">
-                        <div className="form-block">
-                            <label className="form-label">Email: </label>
-                            <input type="text" value={ loginEmail } onChange={ e => setLoginEmail(e.target.value) } className="form-input_text"/>
-                        </div>
+            </div >
+
+
+            <div className="loginFormContainer">
+                <p className="signIn">Sign In</p>
+                <form className="loginForm"
+                    onSubmit={handleLoginSubmit}>
+                    <div className="form-group mb-3 row">
+                        <label className="form-label">Email: </label>
+                        {
+                            errors?.email &&
+                            <span style={{ color: 'red' }}>
+                                {errors?.email?.message}
+                            </span>
+                        }
+                        <input className="form-control" id="loginInput"
+                            type="email"
+                            value={loginEmail}
+                            onChange={e => setLoginEmail(e.target.value)} />
                     </div>
-                    <div className="row">
-                        <div className="form-block">
-                            <label className="form-label">Password: </label>
-                            <input type="text" value={ loginPassword } onChange={ e => setLoginPassword(e.target.value) } className="form-input_text"/>
-                        </div>
+
+                    <div className="form-group mb-3 row">
+                        <label className="form-label">Password: </label>
+                        {
+                            errors?.password &&
+                            <span style={{ color: 'red' }}>
+                                {errors?.password?.message}
+                            </span>
+                        }
+                        <input className="form-control" id="loginInput"
+                            type="password"
+                            value={loginPassword}
+                            onChange={e => setLoginPassword(e.target.value)} />
                     </div>
-                    <div className="row">
-                        <input type="submit" value="Login" className="btn"/>
+
+                    <div className="form-group mb-3 row">
+                        <input className="loginBtn" type="submit" value="Sign In" />
                     </div>
+
                 </form>
             </div>
-        </div>
+        </div >
     )
 }
 

@@ -4,7 +4,7 @@ const bcrypt = require("bcrypt");
 const UserSchema = new mongoose.Schema({
     userName: {
       type: String,
-      required: [true, "User name is required"],
+      required: [true, "Username is required"],
     },
     email: {
       type: String,
@@ -29,13 +29,10 @@ const UserSchema = new mongoose.Schema({
     virtuals: true,
   })
 
-
-
-
   // UserSchema.virtual('confirmPassword')
   // .get( () => this._confirmPassword )
   // .set( value => this._confirmPassword = value );
-  
+
   // UserSchema.pre('validate', function(next) {
   //   if (this.password !== this.confirmPassword) {
   //     this.invalidate('confirmPassword', 'Password must match confirm password');

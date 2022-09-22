@@ -15,7 +15,7 @@ require('./config/mongoose.config');
 // app is a function but it also has key value pairs on it like an object.
 const app = express();
 
-/* 
+/*
 app.use is adding 'middleware':
 stuff that happens in the middle of the the request and response.
 */

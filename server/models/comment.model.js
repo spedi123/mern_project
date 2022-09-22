@@ -11,7 +11,7 @@ const CommentSchema = new mongoose.Schema(
   { timestamps: true } // adds createdAt and updatedAt.
 );
 
-/* 
+/*
 Register schema with mongoose and provide a string to name the collection. This
 also returns a reference to our model that we can use for DB operations.
 */
