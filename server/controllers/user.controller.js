@@ -12,8 +12,14 @@ const {
 
 const loginUser = async (req, res) => {
   const { email, password } = req.body
-
   const user = await User.findOne({ email })
+  // try {
+  //   const user = await User.findOne({ email })
+  //   return res.json(user);
+  // } catch (error) {
+  //   return res.status(400).json(error)
+  // }
+  
 
   if (user && (await bcrypt.compare(password, user.password))) {
     res.json({
@@ -30,28 +36,25 @@ const loginUser = async (req, res) => {
 const signupUser = async (req, res) => {
   const { userName, email, password } = req.body
 
-  const userExists = await User.findOne({ email })
-  if (userExists) {
-    res.status(400).json('error: User already exists')
-  }
-
-  // const salt = await bcrypt.genSalt(10)
-  // const hashedPassword = await bcrypt.hash(password, salt)
-
-  const user = await User.create({
-    userName, email, password
-  })
-
-  if (user) {
-    res.status(201).json({
-      _id: user.id,
-      userName: user.userName,
-      email: user.email,
-      token: generateToken(user._id)
+  try {
+    const user = await User.create({
+      userName, email, password
     })
-  } else {
-    res.status(400).json('error: Invalid user data')
+    return res.josn(user);
+  } catch (error) {
+    return res.status(400).json(error)
   }
+  
+  // if (user) {
+  //   res.status(201).json({
+  //     _id: user.id,
+  //     userName: user.userName,
+  //     email: user.email,
+  //     token: generateToken(user._id)
+  //   })
+  // } else {
+  //   res.status(400).json('error: Invalid user data')
+  // }
 }
 
 const getLoggedInUser = async (req, res) => {

@@ -1,14 +1,18 @@
 const mongoose = require('mongoose');
 const bcrypt = require("bcrypt");
 
+const uniqueValidator = require('mongoose-unique-validator');
+
 const UserSchema = new mongoose.Schema({
     userName: {
       type: String,
       required: [true, "Username is required"],
+      unique: [true, '{PATH} already exist, please input another name.'],
     },
     email: {
       type: String,
       required: [true, "Email is required"],
+      unique: [true, '{PATH} already exist, please input email.'],
       validate: {
         validator: val => /^([\w-\.]+@([\w-]+\.)+[\w-]+)?$/.test(val),
         message: "Please enter a valid email"
@@ -50,6 +54,10 @@ const UserSchema = new mongoose.Schema({
       console.log("error in save", err);
     }
   });
+
+  
+
+UserSchema.plugin(uniqueValidator, {message: '\'{VALUE}\' is already in use. Try another name.'});
 
 const User = mongoose.model('User', UserSchema);
 
