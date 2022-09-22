@@ -67,6 +67,7 @@ const BookCard = (props) => {
         
         const favoriteBook = {
             id : props.id, 
+            thumbnail: props.thumbnail,
             title : props.title,
             authors : props.authors[0],
             publishedDate : props.publishedDate,

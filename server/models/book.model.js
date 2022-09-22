@@ -5,6 +5,9 @@ const BookSchema = new mongoose.Schema(
     id: {
       type: String
     },
+    thumbnail: {
+      type: String
+    },
     title: {
       type: String
     },
