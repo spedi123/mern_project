@@ -1,5 +1,9 @@
 import React from 'react';
+
+import { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
+
+import { createBook } from '../services/internalApiService';
 
 const BookCard = (props) => {
 
@@ -57,6 +61,31 @@ const BookCard = (props) => {
         })
     }
 
+    const handleAddFavoriteBook = () => {
+
+        console.log(props.authors[0]);
+        
+        const favoriteBook = {
+            id : props.id, 
+            title : props.title,
+            authors : props.authors[0],
+            publishedDate : props.publishedDate,
+            averageRating : props.averageRating,
+            ratingsCount : props.ratingsCount,
+            pageCount : props.pageCount,
+            description: props.description
+        }
+
+        createBook(favoriteBook)
+            .then((data) => {
+                console.log('favorite book:', data);
+                navigate('/mybooks')
+            })
+            .catch((error) => {
+                console.log(error);
+              }); 
+    }
+
     return (
         <div className="bookCardContainer">
             <div className="bookCardImgContainer">
@@ -82,7 +111,8 @@ const BookCard = (props) => {
                     onClick={handleViewDetailsClick}>
                     VIEW DETAILS
                 </button>
-                <button className="bookmarkBtn">
+                <button className="bookmarkBtn"
+                    onClick={handleAddFavoriteBook}>
                     ADD TO MY LIST
                 </button>
             </div>

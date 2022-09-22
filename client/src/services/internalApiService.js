@@ -15,7 +15,7 @@ export const getBookById = async (id) => {
 };
 
 export const createBook = async (data) => {
-    const res = await http.post('/books/new', data);
+    const res = await http.post('/books', data);
     return res.data;
 }
 
