@@ -370,6 +370,31 @@ h1 {
   opacity: .5;
 }
 
+.bookmarkBtn:disabled {
+  width: 100px;
+  min-height: 20px;
+  font-size: 10px;
+  font-weight: 800;
+  font-family: nunito, roboto, proxima-nova, "proxima nova", sans-serif;
+  color: #ffffff;
+  background: rgb(110, 110, 110);
+  border: 1px solid rgb(110, 110, 110);
+  border-radius: 6px;
+  box-shadow: rgba(0, 0, 0, 0.1) 1px 2px 4px;
+  box-sizing: border-box;
+  display: inline-block;
+  line-height: 8px;
+  outline: 0;
+  padding: 12px 10px;
+  text-align: center;
+  text-rendering: geometricprecision;
+  text-transform: none;
+  user-select: none;
+  -webkit-user-select: none;
+  touch-action: manipulation;
+  vertical-align: middle;
+}
+
 .oneBookContainer {
   width: 100%;
   height: fit-content;

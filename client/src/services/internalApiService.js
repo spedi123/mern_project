@@ -4,8 +4,8 @@ const http = axios.create({
     baseURL: 'http://localhost:8000/api',
 });
 
-export const getAllMyBooks = async () => {
-    const res = await http.get('/mybooks');
+export const getAllBooks = async () => {
+    const res = await http.get('/books/mybooks');
     return res.data;
 };
 
@@ -25,7 +25,7 @@ export const updateBookById = async (id, data) => {
 }
 
 export const deleteBookById = async (id) => {
-    const res = await http.delete(`/books/${id}/delete`);
+    const res = await http.delete(`/books/mybooks/${id}/delete`);
     return res.data;
 }
 

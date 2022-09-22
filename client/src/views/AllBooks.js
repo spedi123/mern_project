@@ -13,7 +13,7 @@ const AllBooks = (props) => {
                             id={book.id}
                             thumbnail={book.volumeInfo.imageLinks.thumbnail}
                             title={book.volumeInfo.title}
-                            authors={book.volumeInfo.authors}
+                            authors={book.volumeInfo.authors.join(', ')}
                             publishedDate={book.volumeInfo.publishedDate}
                             pageCount={book.volumeInfo.pageCount}
                             averageRating={book.volumeInfo.averageRating}
@@ -40,6 +40,5 @@ const AllBooks = (props) => {
         </div >
     )
 }
-
 
 export default AllBooks;

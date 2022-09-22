@@ -6,19 +6,6 @@ const OneBook = ({ props }) => {
 
     const location = useLocation();
 
-    const updateAuthors = () => {
-        if (location.state.authors !== undefined && location.state.authors.length > 1) {
-            return `${location.state.authors.join(', ')}`
-        }
-        else if (location.state.authors === undefined) {
-            return 'Anonymous'
-        }
-        else {
-            return location.state.authors
-        }
-    }
-
-
     const updateRating = () => {
         return (
             location.state.averageRating !== undefined
@@ -26,7 +13,6 @@ const OneBook = ({ props }) => {
                 : 'Average Rating: None'
         )
     }
-
 
     const handleReturnClick = () => {
         navigate(-1)
@@ -43,7 +29,7 @@ const OneBook = ({ props }) => {
                     <div className="oneBookRow1Right">
                         <ul>
                             <li>Title: {location.state.title}</li>
-                            <li>Author(s): {updateAuthors(location.state.authors)}</li>
+                            <li>Author(s): {location.state.authors}</li>
                             <li>Published Date: {location.state.publishedDate}</li>
                             <li>Number of Pages: {location.state.pageCount} pages</li>
                             <li>Description: {location.state.description} </li>

@@ -1,18 +1,12 @@
 import React from 'react';
-import { useState } from 'react';
+
 import { useNavigate } from 'react-router-dom';
-import {
-    createBook,
-    deleteBookById,
-} from '../services/internalApiService';
 
+import { deleteBookById } from '../services/internalApiService';
 
-const BookCard = (props) => {
+const MyBookCard = (props) => {
 
     const navigate = useNavigate();
-
-    const [buttonText, setButtonText] = useState('ADD TO MY LIST');
-    const [disableBtn, setDisableBtn] = useState(false);
 
     const updateTitle = () => {
         return (
@@ -70,61 +64,13 @@ const BookCard = (props) => {
         })
     }
 
-    // Solution 1: Disable button
-    // const handleAddToMyListClick = (e) => {
-    //     const favoriteBook = {
-    //         id: props.id,
-    //         thumbnail: props.thumbnail,
-    //         title: props.title,
-    //         authors: props.authors,
-    //         publishedDate: props.publishedDate,
-    //         averageRating: props.averageRating,
-    //         ratingsCount: props.ratingsCount,
-    //         pageCount: props.pageCount,
-    //         description: props.description
-    //     }
-
-    //     createBook(favoriteBook)
-    //         .then((data) => {
-    //             console.log('Added Book:', data);
-    //             setButtonText('ADDED');
-    //             setDisableBtn(true);
-    //         })
-    //         .catch((error) => {
-    //             console.log(error);
-    //         });
-    // }
-
-    //  Solution 2: Change Add to my list to delete button
-    const handleAddToMyListClick = (e) => {
-        if (buttonText === "ADD TO MY LIST") {
-            const favoriteBook = {
-                id: props.id,
-                thumbnail: props.thumbnail,
-                title: props.title,
-                authors: props.authors,
-                publishedDate: props.publishedDate,
-                averageRating: props.averageRating,
-                ratingsCount: props.ratingsCount,
-                pageCount: props.pageCount,
-                description: props.description
-            }
-
-            createBook(favoriteBook)
-                .then((data) => {
-                    console.log('Added Book:', data);
-                    setButtonText('ADDED');
-                })
-                .catch((error) => {
-                    console.log(error);
-                });
-        }
-        else if (buttonText === "ADDED") {
-            deleteBookById(props.id)
+    const handleRemoveClick = () => {
+        if (window.confirm(`Are you sure you want to remove this book from your list?`)) {
+            deleteBookById(props._id)
                 .then((deletedBook) => {
-                    console.log(props.id)
-                    console.log('Deleted Book:', deletedBook);
-                    setButtonText('ADD TO MY LIST')
+                    console.log(props._id);
+                    console.log('deleted Book:', deletedBook);
+                    window.location.reload()
                 })
                 .catch((error) => {
                     console.log(error);
@@ -158,9 +104,8 @@ const BookCard = (props) => {
                     VIEW DETAILS
                 </button>
                 <button className="bookmarkBtn"
-                    disabled={disableBtn}
-                    onClick={handleAddToMyListClick}>
-                    {buttonText}
+                    onClick={handleRemoveClick}>
+                    REMOVE
                 </button>
             </div>
 
@@ -168,4 +113,4 @@ const BookCard = (props) => {
     )
 };
 
-export default BookCard;
+export default MyBookCard;

@@ -9,7 +9,7 @@ import {
 } from 'react';
 import axios from 'axios';
 import Header from './components/header/Header';
-import SearchBar from './components/searchBar/SearchBar';
+import SearchBar from './components/search/SearchBar';
 import SubMenu from './components/menu/menu';
 import Welcome from './views/Welcome';
 import AllBooks from './views/AllBooks';
