@@ -4,7 +4,7 @@ import { useNavigate } from 'react-router-dom';
 
 import { deleteBookById } from '../services/internalApiService';
 
-const MyBookCard = (props) => {
+const MyBookCard = (props) => {    
 
     const navigate = useNavigate();
 
