@@ -10,6 +10,24 @@ const {
   updateUserById
 } = require('../services/user.service');
 
+const logoutUser = async (req, res) => {
+  if (req.headers && req.headers.authorization) {
+    const token = req.headers.authorization.split(' ')[1];
+    if (!token) {
+      return res
+        .status(401)
+        .json({ success: false, message: 'Authorization fail!' });
+    }
+
+    const tokens = req.user.tokens;
+
+    const newTokens = tokens.filter(t => t.token !== token);
+
+    await User.findByIdAndUpdate(req.user._id, { tokens: newTokens });
+    res.json({ success: true, message: 'Sign out successfully!' });
+  }
+};
+
 const loginUser = async (req, res) => {
   const { email, password } = req.body
   const user = await User.findOne({ email })
@@ -20,29 +38,42 @@ const loginUser = async (req, res) => {
   //   return res.status(400).json(error)
   // }
   
-
-  if (user && (await bcrypt.compare(password, user.password))) {
-    res.json({
-      _id: user.id,
-      userName: user.userName,
-      email1: user.email,
-      token: generateToken(user._id)
-    })
-  } else {
-    res.status(400).json('error: Invalid credentials')
-  }
+  try {
+    if (user && (await bcrypt.compare(password, user.password))) {
+      res.json({
+        _id: user.id,
+        userName: user.userName,
+        email1: user.email,
+        token: generateToken(user._id)
+      })
+    } else {
+      throw new Error("Invalid credentials")
+    }
+  } catch (error) {
+    return res.status(400).json({message : error.message})
+}
 }
 
 const signupUser = async (req, res) => {
   const { userName, email, password } = req.body
 
   try {
+    // throw new Error("test!!")
     const user = await User.create({
       userName, email, password
     })
-    return res.josn(user);
+    if (user) {
+      res.status(201).json({
+        _id: user.id,
+         userName: user.userName,
+         email: user.email,
+         token: generateToken(user._id)
+      })
+    }
+  
+    return res.json(user);
   } catch (error) {
-    return res.status(400).json(error)
+    return res.status(400).json({ ...error, name: error.name, message : error.message})
   }
   
   // if (user) {
@@ -118,6 +149,7 @@ const handleUpdateUserById = async (req, res) => {
 // Export an object of our controller methods so they can be added to routes.
 module.exports = {
   loginUser,
+  logoutUser,
   signupUser,
   getLoggedInUser,
   handleCreateUser,

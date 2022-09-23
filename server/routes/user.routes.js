@@ -3,6 +3,7 @@ const express = require('express');
 const { protect } = require('../middleware/authMiddleware')
 const {
   loginUser,
+  logoutUser,
   signupUser,
   getLoggedInUser,
   handleCreateUser,
@@ -15,7 +16,8 @@ const {
 const router = express.Router();
 
 router.post('/login', loginUser);
-router.post('/signup', signupUser);
+router.post('/logout', protect, loginUser);
+router.get('/signup', signupUser);
 router.get('/me', protect, getLoggedInUser);
 router.post('/', handleCreateUser);
 router.get('/:id', handleGetUserById);
