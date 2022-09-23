@@ -1,7 +1,12 @@
 import React from 'react';
+<<<<<<< HEAD
+import { useState } from 'react';
+=======
 import { useState, useEffect } from 'react';
+>>>>>>> 3e4480a7b200621a95d64fe5596c46aa0a6d3411
 import { useNavigate, Link } from 'react-router-dom';
 import {
+    getAllBooks,
     createBook,
     deleteBookById,
     getAllBooks
@@ -68,9 +73,9 @@ const BookCard = (props) => {
     }
 
     const handleViewDetailsClick = () => {
-        navigate(`/books/${props.id}`, {
+        navigate(`/books/${props.bookId}`, {
             state: {
-                id: props.id,
+                bookId: props.bookId,
                 thumbnail: props.thumbnail,
                 title: props.title,
                 authors: props.authors,
@@ -86,7 +91,7 @@ const BookCard = (props) => {
     // Solution 1: Disable button
     // const handleAddToMyListClick = (e) => {
     //     const favoriteBook = {
-    //         id: props.id,
+    //         bookId: props.bookid,
     //         thumbnail: props.thumbnail,
     //         title: props.title,
     //         authors: props.authors,
@@ -126,17 +131,37 @@ const BookCard = (props) => {
                 .then((data) => {
                     console.log('Added Book:', data);
                     setButtonText('ADDED');
+<<<<<<< HEAD
+                    console.log(favoriteBook._id);
+
+=======
+>>>>>>> 3e4480a7b200621a95d64fe5596c46aa0a6d3411
                 })
                 .catch((error) => {
                     console.log(error);
                 });
         }
         else if (buttonText === "ADDED") {
+<<<<<<< HEAD
+            console.log('iamhere', favoriteBook._id);
+
+            deleteBookById(props.id)
+=======
             books.map((book) => {
                 if(book.id === props.id) 
                     return book._id
+<<<<<<< HEAD
 
                 deleteBookById(book._id)
+=======
+                }
+                return book
+            })
+            console.log(book);
+            
+            deleteBookById(books[0]._id)
+>>>>>>> 3e4480a7b200621a95d64fe5596c46aa0a6d3411
+>>>>>>> refs/remotes/origin/main
                 .then((deletedBook) => {
                     console.log('Deleted Book:', deletedBook);
                     setButtonText('ADD TO MY LIST')
@@ -174,12 +199,20 @@ const BookCard = (props) => {
                     onClick={handleViewDetailsClick}>
                     VIEW DETAILS
                 </button>
+<<<<<<< HEAD
+
+=======
+>>>>>>> 3e4480a7b200621a95d64fe5596c46aa0a6d3411
                 {localStorage.getItem('token') ? <button className="bookmarkBtn"
                     disabled={disableBtn}
                     onClick={handleAddToMyListClick}>
                     {buttonText}
+<<<<<<< HEAD
+                </button> : <Link className="viewDetailsBtn" to="/users">Sign In / Register</Link>}
+=======
                 </button> :  <Link className="viewDetailsBtn" to="/users">Sign In / Register</Link>}
                 
+>>>>>>> 3e4480a7b200621a95d64fe5596c46aa0a6d3411
             </div>
 
         </div>

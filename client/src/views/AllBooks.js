@@ -10,7 +10,7 @@ const AllBooks = (props) => {
                     return (
                         <BookCard
                             key={i}
-                            id={book.id}
+                            bookId={book.id}
                             thumbnail={book.volumeInfo.imageLinks.thumbnail}
                             title={book.volumeInfo.title}
                             authors={book.volumeInfo.authors.join(', ')}
@@ -25,7 +25,7 @@ const AllBooks = (props) => {
                 catch (err) {
                     <BookCard
                     key={i}
-                    id={book.id}
+                    bookId={book.id}
                     thumbnail={""}
                     title={book.volumeInfo.title}
                     authors={book.volumeInfo.authors}

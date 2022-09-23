@@ -32,7 +32,7 @@ const MyBooks = (props) => {
                         <MyBookCard
                             key={i}
                             _id={book._id}
-                            id={book.id}
+                            bookId={book.id}
                             thumbnail={book.thumbnail}
                             title={book.title}
                             authors={book.authors}
@@ -48,7 +48,7 @@ const MyBooks = (props) => {
                     <MyBookCard
                         key={i}
                         _id={book._id}
-                        id={book.id}
+                        bookId={book.id}
                         thumbnail={""}
                         title={book.title}
                         authors={book.authors}

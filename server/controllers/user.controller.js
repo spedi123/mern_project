@@ -24,7 +24,7 @@ const logoutUser = async (req, res) => {
     const newTokens = tokens.filter(t => t.token !== token);
 
     await User.findByIdAndUpdate(req.user._id, { tokens: newTokens });
-    res.json({ success: true, message: 'Sign out successfully!' });
+    res.json({ success: true, message: 'You have successfully signed out.' });
   }
 };
 
@@ -37,12 +37,12 @@ const loginUser = async (req, res) => {
   // } catch (error) {
   //   return res.status(400).json(error)
   // }
-  
+
   try {
     if (user && (await bcrypt.compare(password, user.password))) {
       res.json({
         _id: user.id,
-        userName: user.userName,
+        username: user.username,
         email1: user.email,
         token: generateToken(user._id)
       })
@@ -54,28 +54,28 @@ const loginUser = async (req, res) => {
 }
 }
 
-const signupUser = async (req, res) => {
-  const { userName, email, password } = req.body
+const registerUser = async (req, res) => {
+  const { username, email, password } = req.body
 
   try {
     // throw new Error("test!!")
     const user = await User.create({
-      userName, email, password
+      username, email, password
     })
     if (user) {
       res.status(201).json({
         _id: user.id,
-         userName: user.userName,
+         username: user.username,
          email: user.email,
          token: generateToken(user._id)
       })
     }
-  
+
     return res.json(user);
   } catch (error) {
     return res.status(400).json({ ...error, name: error.name, message : error.message})
   }
-  
+
   // if (user) {
   //   res.status(201).json({
   //     _id: user.id,
@@ -150,7 +150,7 @@ const handleUpdateUserById = async (req, res) => {
 module.exports = {
   loginUser,
   logoutUser,
-  signupUser,
+  registerUser,
   getLoggedInUser,
   handleCreateUser,
   handleGetAllUsers,
