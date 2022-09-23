@@ -133,14 +133,10 @@ const BookCard = (props) => {
         }
         else if (buttonText === "ADDED") {
             books.map((book) => {
-                if(book.id === props.id) {
+                if(book.id === props.id) 
                     return book._id
-                }
-                return book
-            })
-            console.log(book);
-            
-            deleteBookById(books[0]._id)
+
+                deleteBookById(book._id)
                 .then((deletedBook) => {
                     console.log('Deleted Book:', deletedBook);
                     setButtonText('ADD TO MY LIST')
@@ -148,6 +144,7 @@ const BookCard = (props) => {
                 .catch((error) => {
                     console.log(error);
                 })
+            })
         }
 
     }
