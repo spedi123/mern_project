@@ -1,15 +1,28 @@
 import React from 'react';
-import { useState } from 'react';
-import { useNavigate } from 'react-router-dom';
+import { useState, useEffect } from 'react';
+import { useNavigate, Link } from 'react-router-dom';
 import {
     createBook,
     deleteBookById,
+    getAllBooks
 } from '../services/internalApiService';
 
 
 const BookCard = (props) => {
 
     const navigate = useNavigate();
+
+    const [books, setBooks] = useState([]);
+
+    useEffect(() => {
+        getAllBooks()
+            .then((data) => {
+                setBooks(data);
+            })
+            .catch((error) => {
+                console.log(error);
+            });
+    }, []);
 
     const [buttonText, setButtonText] = useState('ADD TO MY LIST');
     const [disableBtn, setDisableBtn] = useState(false);
@@ -112,21 +125,23 @@ const BookCard = (props) => {
             createBook(favoriteBook)
                 .then((data) => {
                     console.log('Added Book:', data);
-
                     setButtonText('ADDED');
-                    console.log(favoriteBook._id);
-                    
                 })
                 .catch((error) => {
                     console.log(error);
                 });
         }
         else if (buttonText === "ADDED") {
-            console.log('iamhere', favoriteBook._id);
+            books.map((book) => {
+                if(book.id === props.id) {
+                    return book._id
+                }
+                return book
+            })
+            console.log(book);
             
-            deleteBookById(props.id)
+            deleteBookById(books[0]._id)
                 .then((deletedBook) => {
-                    console.log(props.id)
                     console.log('Deleted Book:', deletedBook);
                     setButtonText('ADD TO MY LIST')
                 })
@@ -134,6 +149,7 @@ const BookCard = (props) => {
                     console.log(error);
                 })
         }
+
     }
 
     return (
@@ -161,11 +177,12 @@ const BookCard = (props) => {
                     onClick={handleViewDetailsClick}>
                     VIEW DETAILS
                 </button>
-                <button className="bookmarkBtn"
+                {localStorage.getItem('token') ? <button className="bookmarkBtn"
                     disabled={disableBtn}
                     onClick={handleAddToMyListClick}>
                     {buttonText}
-                </button>
+                </button> :  <Link className="viewDetailsBtn" to="/users">Sign In / Register</Link>}
+                
             </div>
 
         </div>
