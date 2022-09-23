@@ -32,8 +32,7 @@ const LoginAndRegister = () => {
             .then((data) => {
                 console.log('new user data:', data);
                 localStorage.setItem('token', JSON.stringify(data.token))
-                window.confirm(`You have successfully registered.`)
-                navigate('/users')
+                navigate('/users/register')
             })
             .catch((error) => {
                 console.log(error);
@@ -75,9 +74,9 @@ const LoginAndRegister = () => {
                         }
                         <label className="form-label">Username: </label>
                         {
-                            registerValidationErrors?.message &&
+                            registerValidationErrors?.username &&
                             <span style={{ color: 'red' }}>
-                                {registerValidationErrors?.message}
+                                {registerValidationErrors?.username?.message}
                             </span>
                         }
                         <input className="form-control" id="registerInput"

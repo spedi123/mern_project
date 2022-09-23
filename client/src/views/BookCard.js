@@ -127,19 +127,25 @@ const BookCard = (props) => {
             }
             else {
                 createBook(favoriteBook)
-                .then((data) => {
-                    console.log('Added Book:', data);
-                    setButtonText('ADDED');
-                })
-                .catch((error) => {
-                    console.log(error);
-                });
-                window.confirm(`${props.title} successfully added!`)
+                    .then((data) => {
+                        console.log('Added Book:', data);
+                        setButtonText('ADDED');
+                    })
+                    .catch((error) => {
+                        console.log(error);
+                    });
             }
         }
         else if (buttonText === "ADDED") {
+            console.log(props.bookId);
             for (let i = 0; i < books.length; i++) {
-                if (books[i]['bookId'] == props.bookId) {
+
+                console.log(books[i]['bookId']);
+                console.log(props.bookId);
+
+                if (books[i]['bookId'] === props.bookId) {
+                    console.log(books[i]['bookId']);
+                    console.log(props.bookId);
                     deleteBookById(books[i]._id)
                         .then((deletedBook) => {
                             console.log('Deleted Book:', deletedBook);
