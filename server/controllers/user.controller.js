@@ -40,7 +40,7 @@ const signupUser = async (req, res) => {
   const { userName, email, password } = req.body
 
   try {
-    throw new Error("test!!")
+    // throw new Error("test!!")
     const user = await User.create({
       userName, email, password
     })

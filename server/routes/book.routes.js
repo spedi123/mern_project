@@ -9,7 +9,7 @@ const {
 } = require('../controllers/book.controller');
 
 const router = express.Router();
-router.post('/', handleCreateBook);
+router.post('/', protect, handleCreateBook);
 router.get('/mybooks', handleGetAllBooks);
 router.get('/:id', handleGetBookById);
 router.delete('/mybooks/:id/delete', handleDeleteBookById);
