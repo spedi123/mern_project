@@ -20,29 +20,34 @@ const loginUser = async (req, res) => {
   //   return res.status(400).json(error)
   // }
   
-
-  if (user && (await bcrypt.compare(password, user.password))) {
-    res.json({
-      _id: user.id,
-      userName: user.userName,
-      email1: user.email,
-      token: generateToken(user._id)
-    })
-  } else {
-    res.status(400).json('error: Invalid credentials')
-  }
+  try {
+    if (user && (await bcrypt.compare(password, user.password))) {
+      res.json({
+        _id: user.id,
+        userName: user.userName,
+        email1: user.email,
+        token: generateToken(user._id)
+      })
+    } else {
+      throw new Error("Invalid credentials")
+    }
+  } catch (error) {
+    return res.status(400).json({message : error.message})
+}
 }
 
 const signupUser = async (req, res) => {
   const { userName, email, password } = req.body
 
   try {
+    throw new Error("test!!")
     const user = await User.create({
       userName, email, password
     })
-    return res.josn(user);
+  
+    return res.json(user);
   } catch (error) {
-    return res.status(400).json(error)
+    return res.status(400).json({ ...error, name: error.name, message : error.message})
   }
   
   // if (user) {

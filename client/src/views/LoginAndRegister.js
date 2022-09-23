@@ -15,7 +15,9 @@ const LoginAndRegister = () => {
     const [loginEmail, setLoginEmail] = useState("")
     const [loginPassword, setLoginPassword] = useState("")
 
-    const [errors, setErrors] = useState(null);
+    const [signupValidationErrors, setSignupValidationErrors] = useState(null);
+    const [loginErrors, setLoginErrors] = useState(null);
+    const [signupError, setSignupError] = useState(null);
 
     const handleRegisterSubmit = (e) => {
         e.preventDefault();
@@ -29,11 +31,16 @@ const LoginAndRegister = () => {
         createUser(newUser)
             .then((data) => {
                 console.log('new user data:', data);
-                navigate('/')
+                navigate('/signup')
             })
             .catch((error) => {
                 console.log(error);
-                setErrors(error?.response?.data?.errors);
+                if (error?.response?.data?.name === "ValidationError") {
+                    setSignupValidationErrors(error?.response?.data?.errors);
+                } else {
+                    setSignupError(error.response.data)
+                }
+                
             })
     }
 
@@ -48,7 +55,7 @@ const LoginAndRegister = () => {
             })
             .catch((error) => {
                 console.log(error);
-                setErrors(error?.response?.data?.errors);
+                setLoginErrors(error?.response?.data);
             })
     }
 
@@ -59,11 +66,12 @@ const LoginAndRegister = () => {
                 <form className="registerForm"
                     onSubmit={handleRegisterSubmit}>
                     <div className="form-group mb-3 row">
+                        { signupError?.message && <p>{signupError.message}</p>}
                         <label className="form-label">Username: </label>
                         {
-                            errors?.userName &&
+                            signupValidationErrors?.userName &&
                             <span style={{ color: 'red' }}>
-                                {errors?.userName?.message}
+                                {signupValidationErrors?.userName?.message}
                             </span>
                         }
                         <input className="form-control" id="registerInput"
@@ -75,9 +83,9 @@ const LoginAndRegister = () => {
                     <div className="form-group mb-3 row">
                         <label className="form-label">Email: </label>
                         {
-                            errors?.email &&
+                            signupValidationErrors?.email &&
                             <span style={{ color: 'red' }}>
-                                {errors?.email?.message}
+                                {signupValidationErrors?.email?.message}
                             </span>
                         }
                         <input className="form-control" id="registerInput"
@@ -89,9 +97,9 @@ const LoginAndRegister = () => {
                     <div className="form-group mb-3 row">
                         <label className="form-label">Password: </label>
                         {
-                            errors?.password &&
+                            signupValidationErrors?.password &&
                             <span style={{ color: 'red' }}>
-                                {errors?.password?.message}
+                                {signupValidationErrors?.password?.message}
                             </span>
                         }
                         <input className="form-control"
@@ -103,9 +111,9 @@ const LoginAndRegister = () => {
                     <div className="form-group mb-3 row">
                         <label className="form-label">ConfirmPassword: </label>
                         {
-                            errors?.confirmPassword &&
+                            signupValidationErrors?.confirmPassword &&
                             <span style={{ color: 'red' }}>
-                                {errors?.confirmPassword?.message}
+                                {signupValidationErrors?.confirmPassword?.message}
                             </span>
                         }
                         <input className="form-control mb-3"
@@ -128,9 +136,9 @@ const LoginAndRegister = () => {
                     <div className="form-group mb-3 row">
                         <label className="form-label">Email: </label>
                         {
-                            errors?.email &&
+                            loginErrors?.message &&
                             <span style={{ color: 'red' }}>
-                                {errors?.email?.message}
+                                {loginErrors.message}
                             </span>
                         }
                         <input className="form-control" id="loginInput"
@@ -141,12 +149,12 @@ const LoginAndRegister = () => {
 
                     <div className="form-group mb-3 row">
                         <label className="form-label">Password: </label>
-                        {
-                            errors?.password &&
+                        {/* {
+                            loginErrors.messageord &&
                             <span style={{ color: 'red' }}>
-                                {errors?.password?.message}
+                                {signupErrors?.password?.message}
                             </span>
-                        }
+                        } */}
                         <input className="form-control" id="loginInput"
                             type="password"
                             value={loginPassword}

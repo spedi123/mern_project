@@ -97,29 +97,33 @@ const BookCard = (props) => {
 
     //  Solution 2: Change Add to my list to delete button
     const handleAddToMyListClick = (e) => {
+        const favoriteBook = {
+            id: props.id,
+            thumbnail: props.thumbnail,
+            title: props.title,
+            authors: props.authors,
+            publishedDate: props.publishedDate,
+            averageRating: props.averageRating,
+            ratingsCount: props.ratingsCount,
+            pageCount: props.pageCount,
+            description: props.description
+        }
         if (buttonText === "ADD TO MY LIST") {
-            const favoriteBook = {
-                id: props.id,
-                thumbnail: props.thumbnail,
-                title: props.title,
-                authors: props.authors,
-                publishedDate: props.publishedDate,
-                averageRating: props.averageRating,
-                ratingsCount: props.ratingsCount,
-                pageCount: props.pageCount,
-                description: props.description
-            }
-
             createBook(favoriteBook)
                 .then((data) => {
                     console.log('Added Book:', data);
+
                     setButtonText('ADDED');
+                    console.log(favoriteBook._id);
+                    
                 })
                 .catch((error) => {
                     console.log(error);
                 });
         }
         else if (buttonText === "ADDED") {
+            console.log('iamhere', favoriteBook._id);
+            
             deleteBookById(props.id)
                 .then((deletedBook) => {
                     console.log(props.id)
