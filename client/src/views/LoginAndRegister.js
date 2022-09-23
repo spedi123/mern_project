@@ -7,7 +7,7 @@ const LoginAndRegister = () => {
 
     const navigate = useNavigate();
 
-    const [userName, setUserName] = useState("");
+    const [username, setUsername] = useState("");
     const [email, setEmail] = useState("");
     const [password, setPassword] = useState("");
     const [confirmPassword, setConfirmPassword] = useState("");
@@ -15,14 +15,14 @@ const LoginAndRegister = () => {
     const [loginEmail, setLoginEmail] = useState("")
     const [loginPassword, setLoginPassword] = useState("")
 
-    const [signupValidationErrors, setSignupValidationErrors] = useState(null);
+    const [registerValidationErrors, setRegisterValidationErrors] = useState(null);
+    const [registerErrors, setRegisterErrors] = useState(null);
     const [loginErrors, setLoginErrors] = useState(null);
-    const [signupError, setSignupError] = useState(null);
 
     const handleRegisterSubmit = (e) => {
         e.preventDefault();
         const newUser = {
-            userName,
+            username,
             email,
             password,
             confirmPassword
@@ -32,16 +32,17 @@ const LoginAndRegister = () => {
             .then((data) => {
                 console.log('new user data:', data);
                 localStorage.setItem('token', JSON.stringify(data.token))
-                navigate('/signup')
+                window.confirm(`You have successfully registered.`)
+                navigate('/users')
             })
             .catch((error) => {
                 console.log(error);
                 if (error?.response?.data?.name === "ValidationError") {
-                    setSignupValidationErrors(error?.response?.data?.errors);
+                    setRegisterValidationErrors(error?.response?.data?.errors);
                 } else {
-                    setSignupError(error.response.data)
+                    setRegisterErrors(error.response.data)
                 }
-                
+
             })
     }
 
@@ -68,26 +69,29 @@ const LoginAndRegister = () => {
                 <form className="registerForm"
                     onSubmit={handleRegisterSubmit}>
                     <div className="form-group mb-3 row">
-                        { signupError?.message && <p>{signupError.message}</p>}
+                        {
+                            registerErrors?.message &&
+                            <p>{registerErrors.message}</p>
+                        }
                         <label className="form-label">Username: </label>
                         {
-                            signupValidationErrors?.userName &&
+                            registerValidationErrors?.message &&
                             <span style={{ color: 'red' }}>
-                                {signupValidationErrors?.userName?.message}
+                                {registerValidationErrors?.message}
                             </span>
                         }
                         <input className="form-control" id="registerInput"
                             type="text"
-                            value={userName}
-                            onChange={e => setUserName(e.target.value)} />
+                            value={username}
+                            onChange={e => setUsername(e.target.value)} />
                     </div>
 
                     <div className="form-group mb-3 row">
                         <label className="form-label">Email: </label>
                         {
-                            signupValidationErrors?.email &&
+                            registerValidationErrors?.email &&
                             <span style={{ color: 'red' }}>
-                                {signupValidationErrors?.email?.message}
+                                {registerValidationErrors?.email?.message}
                             </span>
                         }
                         <input className="form-control" id="registerInput"
@@ -99,9 +103,9 @@ const LoginAndRegister = () => {
                     <div className="form-group mb-3 row">
                         <label className="form-label">Password: </label>
                         {
-                            signupValidationErrors?.password &&
+                            registerValidationErrors?.password &&
                             <span style={{ color: 'red' }}>
-                                {signupValidationErrors?.password?.message}
+                                {registerValidationErrors?.password?.message}
                             </span>
                         }
                         <input className="form-control"
@@ -113,9 +117,9 @@ const LoginAndRegister = () => {
                     <div className="form-group mb-3 row">
                         <label className="form-label">ConfirmPassword: </label>
                         {
-                            signupValidationErrors?.confirmPassword &&
+                            registerValidationErrors?.confirmPassword &&
                             <span style={{ color: 'red' }}>
-                                {signupValidationErrors?.confirmPassword?.message}
+                                {registerValidationErrors?.confirmPassword?.message}
                             </span>
                         }
                         <input className="form-control mb-3"
@@ -137,12 +141,6 @@ const LoginAndRegister = () => {
                     onSubmit={handleLoginSubmit}>
                     <div className="form-group mb-3 row">
                         <label className="form-label">Email: </label>
-                        {
-                            loginErrors?.message &&
-                            <span style={{ color: 'red' }}>
-                                {loginErrors.message}
-                            </span>
-                        }
                         <input className="form-control" id="loginInput"
                             type="email"
                             value={loginEmail}
@@ -154,13 +152,19 @@ const LoginAndRegister = () => {
                         {/* {
                             loginErrors.messageord &&
                             <span style={{ color: 'red' }}>
-                                {signupErrors?.password?.message}
+                            {registerErrorss?.password?.message}
                             </span>
                         } */}
                         <input className="form-control" id="loginInput"
                             type="password"
                             value={loginPassword}
                             onChange={e => setLoginPassword(e.target.value)} />
+                        {
+                            loginErrors?.message &&
+                            <span style={{ color: 'red' }}>
+                                {loginErrors.message}
+                            </span>
+                        }
                     </div>
 
                     <div className="form-group mb-3 row">

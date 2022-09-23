@@ -30,7 +30,7 @@ export const deleteBookById = async (id) => {
 }
 
 export const createUser = async (data) => {
-    const res = await http.post('/users/signup', data);
+    const res = await http.post('/users/register', data);
     return res.data;
 }
 

@@ -1,15 +1,10 @@
 import React from 'react';
-<<<<<<< HEAD
-import { useState } from 'react';
-=======
 import { useState, useEffect } from 'react';
->>>>>>> 3e4480a7b200621a95d64fe5596c46aa0a6d3411
 import { useNavigate, Link } from 'react-router-dom';
 import {
     getAllBooks,
     createBook,
     deleteBookById,
-    getAllBooks
 } from '../services/internalApiService';
 
 
@@ -116,7 +111,7 @@ const BookCard = (props) => {
     //  Solution 2: Change Add to my list to delete button
     const handleAddToMyListClick = (e) => {
         const favoriteBook = {
-            id: props.id,
+            bookId: props.bookId,
             thumbnail: props.thumbnail,
             title: props.title,
             authors: props.authors,
@@ -127,47 +122,36 @@ const BookCard = (props) => {
             description: props.description
         }
         if (buttonText === "ADD TO MY LIST") {
-            createBook(favoriteBook)
+            if (books.find(({ bookId }) => bookId === props.bookId)) {
+                window.confirm(`This book is already in your list!`)
+            }
+            else {
+                createBook(favoriteBook)
                 .then((data) => {
                     console.log('Added Book:', data);
                     setButtonText('ADDED');
-<<<<<<< HEAD
-                    console.log(favoriteBook._id);
-
-=======
->>>>>>> 3e4480a7b200621a95d64fe5596c46aa0a6d3411
                 })
                 .catch((error) => {
                     console.log(error);
                 });
+                window.confirm(`${props.title} successfully added!`)
+            }
         }
         else if (buttonText === "ADDED") {
-<<<<<<< HEAD
-            console.log('iamhere', favoriteBook._id);
-
-            deleteBookById(props.id)
-=======
-            books.map((book) => {
-                if(book.id === props.id) {
-                    return book._id
+            for (let i = 0; i < books.length; i++) {
+                if (books[i]['bookId'] == props.bookId) {
+                    deleteBookById(books[i]._id)
+                        .then((deletedBook) => {
+                            console.log('Deleted Book:', deletedBook);
+                            setButtonText('ADD TO MY LIST')
+                        })
+                        .catch((error) => {
+                            console.log(error);
+                        })
                 }
-                return book
-            })
-            console.log(book);
-            
-            deleteBookById(books[0]._id)
->>>>>>> 3e4480a7b200621a95d64fe5596c46aa0a6d3411
-                .then((deletedBook) => {
-                    console.log('Deleted Book:', deletedBook);
-                    setButtonText('ADD TO MY LIST')
-                })
-                .catch((error) => {
-                    console.log(error);
-                })
+            }
         }
-
     }
-
     return (
         <div className="bookCardContainer">
             <div className="bookCardImgContainer">
@@ -193,20 +177,15 @@ const BookCard = (props) => {
                     onClick={handleViewDetailsClick}>
                     VIEW DETAILS
                 </button>
-<<<<<<< HEAD
 
-=======
->>>>>>> 3e4480a7b200621a95d64fe5596c46aa0a6d3411
-                {localStorage.getItem('token') ? <button className="bookmarkBtn"
-                    disabled={disableBtn}
-                    onClick={handleAddToMyListClick}>
-                    {buttonText}
-<<<<<<< HEAD
-                </button> : <Link className="viewDetailsBtn" to="/users">Sign In / Register</Link>}
-=======
-                </button> :  <Link className="viewDetailsBtn" to="/users">Sign In / Register</Link>}
-                
->>>>>>> 3e4480a7b200621a95d64fe5596c46aa0a6d3411
+                {localStorage.getItem('token')
+                    ? <button className="bookmarkBtn"
+                        disabled={disableBtn}
+                        onClick={handleAddToMyListClick}>
+                        {buttonText}
+                    </button>
+                    : <Link className="bookmarkBtn" to="/users">ADD TO MY LIST</Link>}
+
             </div>
 
         </div>

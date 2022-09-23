@@ -7,6 +7,7 @@ const SubMenu = (props) => {
 
     const logout = (e) => {
         localStorage.clear();
+        window.confirm(`You have successfully signed out.`)
         navigate('/');
     }
     return (
@@ -18,10 +19,13 @@ const SubMenu = (props) => {
                 <Link to="/mybooks" className="menuLink">
                     <li>My Favorite Books</li>
                 </Link>
-                
-                    {localStorage.getItem('token') ? <Link to="/" className="menuLink"><li onClick={logout}>Logout</li></Link> :
-                    <Link to="/users" className="menuLink"><li>Sign In / Register</li> </Link>}
-                
+
+                {localStorage.getItem('token')
+                    ? <Link to="/" className="menuLink">
+                        <li onClick={logout}>Sign Out</li>
+                    </Link>
+                    : <Link to="/users" className="menuLink"><li>Sign In / Register</li> </Link>}
+
             </ul>
         </div>
     )

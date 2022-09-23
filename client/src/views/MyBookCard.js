@@ -4,7 +4,7 @@ import { useNavigate } from 'react-router-dom';
 
 import { deleteBookById } from '../services/internalApiService';
 
-const MyBookCard = (props) => {    
+const MyBookCard = (props) => {
 
     const navigate = useNavigate();
 
@@ -66,17 +66,15 @@ const MyBookCard = (props) => {
     }
 
     const handleRemoveClick = () => {
-        if (window.confirm(`Are you sure you want to remove this book from your list?`)) {
-            deleteBookById(props._id)
-                .then((deletedBook) => {
-                    console.log(props._id);
-                    console.log('deleted Book:', deletedBook);
-                    window.location.reload()
-                })
-                .catch((error) => {
-                    console.log(error);
-                })
-        }
+        deleteBookById(props._id)
+            .then((deletedBook) => {
+                console.log(props._id);
+                console.log('deleted Book:', deletedBook);
+                window.location.reload()
+            })
+            .catch((error) => {
+                console.log(error);
+            })
     }
 
     return (
