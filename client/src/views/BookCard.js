@@ -137,8 +137,15 @@ const BookCard = (props) => {
             }
         }
         else if (buttonText === "ADDED") {
+            console.log(props.bookId); 
             for (let i = 0; i < books.length; i++) {
-                if (books[i]['bookId'] == props.bookId) {
+                
+                console.log(books[i]['bookId']);
+                console.log(props.bookId); 
+                
+                if (books[i]['bookId'] === props.bookId) {
+                    console.log(books[i]['bookId']);
+                    console.log(props.bookId);
                     deleteBookById(books[i]._id)
                         .then((deletedBook) => {
                             console.log('Deleted Book:', deletedBook);

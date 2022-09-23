@@ -55,6 +55,8 @@ const loginUser = async (req, res) => {
 }
 
 const registerUser = async (req, res) => {
+  console.log('connect');
+  
   const { username, email, password } = req.body
 
   try {

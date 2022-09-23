@@ -7,7 +7,7 @@ const LoginAndRegister = () => {
 
     const navigate = useNavigate();
 
-    const [userName, setUserName] = useState("");
+    const [username, setUsername] = useState("");
     const [email, setEmail] = useState("");
     const [password, setPassword] = useState("");
     const [confirmPassword, setConfirmPassword] = useState("");
@@ -22,7 +22,7 @@ const LoginAndRegister = () => {
     const handleRegisterSubmit = (e) => {
         e.preventDefault();
         const newUser = {
-            userName,
+            username,
             email,
             password,
             confirmPassword
@@ -32,7 +32,7 @@ const LoginAndRegister = () => {
             .then((data) => {
                 console.log('new user data:', data);
                 localStorage.setItem('token', JSON.stringify(data.token))
-                navigate('/signup')
+                navigate('/users/register')
             })
             .catch((error) => {
                 console.log(error);
@@ -71,15 +71,15 @@ const LoginAndRegister = () => {
                         { signupError?.message && <p>{signupError.message}</p>}
                         <label className="form-label">Username: </label>
                         {
-                            signupValidationErrors?.userName &&
+                            signupValidationErrors?.username &&
                             <span style={{ color: 'red' }}>
-                                {signupValidationErrors?.userName?.message}
+                                {signupValidationErrors?.username?.message}
                             </span>
                         }
                         <input className="form-control" id="registerInput"
                             type="text"
-                            value={userName}
-                            onChange={e => setUserName(e.target.value)} />
+                            value={username}
+                            onChange={e => setUsername(e.target.value)} />
                     </div>
 
                     <div className="form-group mb-3 row">
