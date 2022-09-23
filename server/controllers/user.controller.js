@@ -10,6 +10,24 @@ const {
   updateUserById
 } = require('../services/user.service');
 
+const logoutUser = async (req, res) => {
+  if (req.headers && req.headers.authorization) {
+    const token = req.headers.authorization.split(' ')[1];
+    if (!token) {
+      return res
+        .status(401)
+        .json({ success: false, message: 'Authorization fail!' });
+    }
+
+    const tokens = req.user.tokens;
+
+    const newTokens = tokens.filter(t => t.token !== token);
+
+    await User.findByIdAndUpdate(req.user._id, { tokens: newTokens });
+    res.json({ success: true, message: 'Sign out successfully!' });
+  }
+};
+
 const loginUser = async (req, res) => {
   const { email, password } = req.body
   const user = await User.findOne({ email })
@@ -44,6 +62,14 @@ const signupUser = async (req, res) => {
     const user = await User.create({
       userName, email, password
     })
+    if (user) {
+      res.status(201).json({
+        _id: user.id,
+         userName: user.userName,
+         email: user.email,
+         token: generateToken(user._id)
+      })
+    }
   
     return res.json(user);
   } catch (error) {
@@ -123,6 +149,7 @@ const handleUpdateUserById = async (req, res) => {
 // Export an object of our controller methods so they can be added to routes.
 module.exports = {
   loginUser,
+  logoutUser,
   signupUser,
   getLoggedInUser,
   handleCreateUser,

@@ -31,6 +31,7 @@ const LoginAndRegister = () => {
         createUser(newUser)
             .then((data) => {
                 console.log('new user data:', data);
+                localStorage.setItem('token', JSON.stringify(data.token))
                 navigate('/signup')
             })
             .catch((error) => {
@@ -51,6 +52,7 @@ const LoginAndRegister = () => {
         loginUser(user)
             .then((data) => {
                 console.log('login user:', data);
+                localStorage.setItem('token', JSON.stringify(data.token))
                 navigate('/')
             })
             .catch((error) => {

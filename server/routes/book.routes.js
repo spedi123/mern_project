@@ -10,7 +10,7 @@ const {
 
 const router = express.Router();
 router.post('/', protect, handleCreateBook);
-router.get('/mybooks', handleGetAllBooks);
+router.get('/mybooks', protect, handleGetAllBooks);
 router.get('/:id', handleGetBookById);
 router.delete('/mybooks/:id/delete', handleDeleteBookById);
 router.put('/:id', handleUpdateBookById);
