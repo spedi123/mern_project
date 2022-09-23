@@ -2,6 +2,7 @@ import React from 'react';
 import { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import {
+    getAllBooks,
     createBook,
     deleteBookById,
 } from '../services/internalApiService';
@@ -55,9 +56,9 @@ const BookCard = (props) => {
     }
 
     const handleViewDetailsClick = () => {
-        navigate(`/books/${props.id}`, {
+        navigate(`/books/${props.bookId}`, {
             state: {
-                id: props.id,
+                bookId: props.bookId,
                 thumbnail: props.thumbnail,
                 title: props.title,
                 authors: props.authors,
@@ -71,66 +72,68 @@ const BookCard = (props) => {
     }
 
     // Solution 1: Disable button
-    // const handleAddToMyListClick = (e) => {
-    //     const favoriteBook = {
-    //         id: props.id,
-    //         thumbnail: props.thumbnail,
-    //         title: props.title,
-    //         authors: props.authors,
-    //         publishedDate: props.publishedDate,
-    //         averageRating: props.averageRating,
-    //         ratingsCount: props.ratingsCount,
-    //         pageCount: props.pageCount,
-    //         description: props.description
-    //     }
+    const handleAddToMyListClick = (e) => {
+        const favoriteBook = {
+            bookId: props.bookid,
+            thumbnail: props.thumbnail,
+            title: props.title,
+            authors: props.authors,
+            publishedDate: props.publishedDate,
+            averageRating: props.averageRating,
+            ratingsCount: props.ratingsCount,
+            pageCount: props.pageCount,
+            description: props.description
+        }
 
-    //     createBook(favoriteBook)
-    //         .then((data) => {
-    //             console.log('Added Book:', data);
-    //             setButtonText('ADDED');
-    //             setDisableBtn(true);
-    //         })
-    //         .catch((error) => {
-    //             console.log(error);
-    //         });
-    // }
+        createBook(favoriteBook)
+            .then((data) => {
+                console.log('Added Book:', data);
+                setButtonText('ADDED');
+                setDisableBtn(true);
+            })
+            .catch((error) => {
+                console.log(error);
+            });
+    }
 
     //  Solution 2: Change Add to my list to delete button
-    const handleAddToMyListClick = (e) => {
-        if (buttonText === "ADD TO MY LIST") {
-            const favoriteBook = {
-                id: props.id,
-                thumbnail: props.thumbnail,
-                title: props.title,
-                authors: props.authors,
-                publishedDate: props.publishedDate,
-                averageRating: props.averageRating,
-                ratingsCount: props.ratingsCount,
-                pageCount: props.pageCount,
-                description: props.description
-            }
+    // const handleAddToMyListClick = (e) => {
+    //     if (buttonText === "ADD TO MY LIST") {
+    //         const favoriteBook = {
+    //             bookId: props.bookId,
+    //             thumbnail: props.thumbnail,
+    //             title: props.title,
+    //             authors: props.authors,
+    //             publishedDate: props.publishedDate,
+    //             averageRating: props.averageRating,
+    //             ratingsCount: props.ratingsCount,
+    //             pageCount: props.pageCount,
+    //             description: props.description
+    //         }
 
-            createBook(favoriteBook)
-                .then((data) => {
-                    console.log('Added Book:', data);
-                    setButtonText('ADDED');
-                })
-                .catch((error) => {
-                    console.log(error);
-                });
-        }
-        else if (buttonText === "ADDED") {
-            deleteBookById(props.id)
-                .then((deletedBook) => {
-                    console.log(props.id)
-                    console.log('Deleted Book:', deletedBook);
-                    setButtonText('ADD TO MY LIST')
-                })
-                .catch((error) => {
-                    console.log(error);
-                })
-        }
-    }
+    //         createBook(favoriteBook)
+    //             .then((data) => {
+    //                 console.log('Added Book:', data);
+    //                 setButtonText('ADDED');
+    //             })
+    //             .catch((error) => {
+    //                 console.log(error);
+    //             });
+    //     }
+    //     else if (buttonText === "ADDED") {
+    //         if (window.confirm(`Are you sure you want to remove this book from your list?`)) {
+    //             deleteBookById()
+    //                 .then((deletedBook) => {
+    //                     console.log(props.id);
+    //                     console.log('Deleted Book:', deletedBook);
+    //                     setButtonText('ADD TO MY LIST')
+    //                 })
+    //                 .catch((error) => {
+    //                     console.log(error);
+    //                 })
+    //         }
+    //     }
+    // }
 
     return (
         <div className="bookCardContainer">
@@ -157,6 +160,7 @@ const BookCard = (props) => {
                     onClick={handleViewDetailsClick}>
                     VIEW DETAILS
                 </button>
+
                 <button className="bookmarkBtn"
                     disabled={disableBtn}
                     onClick={handleAddToMyListClick}>

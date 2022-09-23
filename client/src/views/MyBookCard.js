@@ -49,9 +49,10 @@ const MyBookCard = (props) => {
     }
 
     const handleViewDetailsClick = () => {
-        navigate(`/books/${props.id}`, {
+        navigate(`/books/${props.bookId}`, {
             state: {
-                id: props.id,
+                _id: props._id,
+                bookId: props.bookId,
                 thumbnail: props.thumbnail,
                 title: props.title,
                 authors: props.authors,
