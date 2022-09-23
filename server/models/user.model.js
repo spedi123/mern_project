@@ -4,24 +4,24 @@ const bcrypt = require("bcrypt");
 const uniqueValidator = require('mongoose-unique-validator');
 
 const UserSchema = new mongoose.Schema({
-    userName: {
+    username: {
       type: String,
-      required: [true, "Username is required"],
-      unique: [true, '{PATH} already exist, please input another name.'],
+      required: [true, "Username is required."],
+      unique: [true, '{PATH} already exist. Please enter another username.'],
     },
     email: {
       type: String,
-      required: [true, "Email is required"],
-      unique: [true, '{PATH} already exist, please input email.'],
+      required: [true, "Email is required."],
+      unique: [true, '{PATH} already exist. Please enter another email address.'],
       validate: {
         validator: val => /^([\w-\.]+@([\w-]+\.)+[\w-]+)?$/.test(val),
-        message: "Please enter a valid email"
+        message: "Please enter a valid email address."
       }
     },
     password: {
       type: String,
-      required: [true, "Password is required"],
-      minlength: [8, "Password must be 8 characters or longer"]
+      required: [true, "Password is required."],
+      minlength: [8, "Password must be at least {MINLENGTH} characters long."]
     }
   }, {timestamps: true});
 
@@ -55,7 +55,7 @@ const UserSchema = new mongoose.Schema({
     }
   });
 
-  
+
 
 UserSchema.plugin(uniqueValidator, {message: '\'{VALUE}\' is already in use. Try another name.'});
 

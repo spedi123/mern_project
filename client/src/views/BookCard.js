@@ -1,16 +1,33 @@
 import React from 'react';
+<<<<<<< HEAD
 import { useState } from 'react';
+=======
+import { useState, useEffect } from 'react';
+>>>>>>> 3e4480a7b200621a95d64fe5596c46aa0a6d3411
 import { useNavigate, Link } from 'react-router-dom';
 import {
     getAllBooks,
     createBook,
     deleteBookById,
+    getAllBooks
 } from '../services/internalApiService';
 
 
 const BookCard = (props) => {
 
     const navigate = useNavigate();
+
+    const [books, setBooks] = useState([]);
+
+    useEffect(() => {
+        getAllBooks()
+            .then((data) => {
+                setBooks(data);
+            })
+            .catch((error) => {
+                console.log(error);
+            });
+    }, []);
 
     const [buttonText, setButtonText] = useState('ADD TO MY LIST');
     const [disableBtn, setDisableBtn] = useState(false);
@@ -113,21 +130,34 @@ const BookCard = (props) => {
             createBook(favoriteBook)
                 .then((data) => {
                     console.log('Added Book:', data);
-
                     setButtonText('ADDED');
+<<<<<<< HEAD
                     console.log(favoriteBook._id);
 
+=======
+>>>>>>> 3e4480a7b200621a95d64fe5596c46aa0a6d3411
                 })
                 .catch((error) => {
                     console.log(error);
                 });
         }
         else if (buttonText === "ADDED") {
+<<<<<<< HEAD
             console.log('iamhere', favoriteBook._id);
 
             deleteBookById(props.id)
+=======
+            books.map((book) => {
+                if(book.id === props.id) {
+                    return book._id
+                }
+                return book
+            })
+            console.log(book);
+            
+            deleteBookById(books[0]._id)
+>>>>>>> 3e4480a7b200621a95d64fe5596c46aa0a6d3411
                 .then((deletedBook) => {
-                    console.log(props.id)
                     console.log('Deleted Book:', deletedBook);
                     setButtonText('ADD TO MY LIST')
                 })
@@ -135,6 +165,7 @@ const BookCard = (props) => {
                     console.log(error);
                 })
         }
+
     }
 
     return (
@@ -162,12 +193,20 @@ const BookCard = (props) => {
                     onClick={handleViewDetailsClick}>
                     VIEW DETAILS
                 </button>
+<<<<<<< HEAD
 
+=======
+>>>>>>> 3e4480a7b200621a95d64fe5596c46aa0a6d3411
                 {localStorage.getItem('token') ? <button className="bookmarkBtn"
                     disabled={disableBtn}
                     onClick={handleAddToMyListClick}>
                     {buttonText}
+<<<<<<< HEAD
                 </button> : <Link className="viewDetailsBtn" to="/users">Sign In / Register</Link>}
+=======
+                </button> :  <Link className="viewDetailsBtn" to="/users">Sign In / Register</Link>}
+                
+>>>>>>> 3e4480a7b200621a95d64fe5596c46aa0a6d3411
             </div>
 
         </div>

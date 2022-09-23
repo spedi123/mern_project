@@ -1,11 +1,18 @@
 import React, { useState, useEffect } from 'react';
 import MyBookCard from './MyBookCard';
+import { useNavigate } from 'react-router-dom';
 import { getAllBooks } from '../services/internalApiService';
 
 const MyBooks = (props) => {
+
+    const navigate = useNavigate();
+
     const [books, setBooks] = useState([]);
 
     useEffect(() => {
+        if (!localStorage.getItem('token')) {
+            navigate('/users')
+        }
         getAllBooks()
             .then((data) => {
                 console.log(data);
@@ -14,12 +21,12 @@ const MyBooks = (props) => {
             .catch((error) => {
                 console.log(error);
             });
-    }, []);
+    }, [navigate]);
 
 
     return (
         <div className="contentContainer">
-            {books !== undefined && books.map((book, i) => {
+                {books !== undefined && books.map((book, i) => {
                 try {
                     return (
                         <MyBookCard
